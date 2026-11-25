@@ -1,0 +1,17 @@
+{% extends 'store/base.html' %}
+{% block title %}Checkout | ShopEase{% endblock %}
+{% block content %}
+<h1 class="h2 mb-4">Checkout</h1>
+<div class="row g-4">
+  <div class="col-lg-7"><div class="form-card"><h2 class="h5 mb-3">Delivery details</h2>
+    <form method="post">{% csrf_token %}
+      <div class="mb-3"><label class="form-label" for="full_name">Full name</label><input class="form-control" id="full_name" name="full_name" required maxlength="150" value="{{ request.user.get_full_name }}"></div>
+      <div class="mb-3"><label class="form-label" for="phone">Phone number</label><input class="form-control" id="phone" name="phone" required maxlength="20" inputmode="tel"></div>
+      <div class="mb-3"><label class="form-label" for="address">Delivery address</label><textarea class="form-control" id="address" name="address" rows="4" required></textarea></div>
+      <label class="form-label">Payment method</label><div class="border rounded p-3 mb-4">Cash on delivery (COD)</div>
+      <button class="btn btn-dark btn-lg w-100" type="submit">Place order · ₹{{ total }}</button>
+    </form>
+  </div></div>
+  <div class="col-lg-5"><div class="summary-card"><h2 class="h5">Your order</h2>{% for item in items %}<div class="d-flex justify-content-between gap-3 py-2"><span>{{ item.product.name }} × {{ item.quantity }}</span><strong>₹{{ item.subtotal }}</strong></div>{% endfor %}<hr><div class="d-flex justify-content-between fs-5"><strong>Total</strong><strong>₹{{ total }}</strong></div></div></div>
+</div>
+{% endblock %}
